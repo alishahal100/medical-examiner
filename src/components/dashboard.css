@@ -1,0 +1,39 @@
+/* styles.css */
+body {
+    font-family: sans-serif;
+    background-color: white;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  .upper-half {
+    background-color: rgb(82, 169, 82);
+    height: 50vh;
+    padding: 50px;
+    color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .doctor-info {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  .uploaded-image {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 100px;
+    max-height: 100px;
+  }
+  

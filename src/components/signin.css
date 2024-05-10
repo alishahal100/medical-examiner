@@ -1,0 +1,74 @@
+/* Basic styling for the login form */
+.body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    /* Set the background image */
+    background-image: url('/public/background1.png'); /* Change 'background.jpg' to your image file path */
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+    padding: 20px;
+    color: white; /* Text color inside the black container */
+    border-radius: 10px; /* Adjust as needed */
+}
+
+h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center; /* Center the text */
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5); /* Transparent white for input fields */
+    color: rgb(255, 255, 255); /* Font color */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Add margin to separate from the link */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.signup-link {
+    text-align: center;
+    color: #fff;
+}
+
+.signup-link a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
