@@ -14,6 +14,7 @@ import jsPDF from 'jspdf';
 
 const PatientDetails = () => {
   const [weekData, setWeekData] = useState([]); // Initialize as an empty array
+  const [inputData, setInputData] = useState([]); // Initialize as an empty array
   const [prediction, setPrediction] = useState('');
   const [showPredictionModal, setShowPredictionModal] = useState(false);
   const [patientdetails, setPatientDetails] = useState([]);
@@ -51,23 +52,24 @@ const PatientDetails = () => {
   };
 
   const handleChange = (index, value) => {
-    const updatedWeekData = [...weekData];
-    updatedWeekData[index] = value !== '' ? Number(value) : '';
-    setWeekData(updatedWeekData);
+    const updatedWeekData = [...inputData];
+    updatedWeekData[index] = value !== '' ? parseFloat(value) : '';
+    setInputData(updatedWeekData);
   };
+
 
   const addWeekData = async (e) => {
     e.preventDefault()
-    const inputdata = [130.0,0.005,0.469,0.005,0.004,0.0,0.001,29.0,1.7,0.0,7.8,112.0,65.0,177.0,6.0,1.0,133.0,129.0,133.0,27.0,0.0,]
+    // const inputdata = [130.0,0.005,0.469,0.005,0.004,0.0,0.001,29.0,1.7,0.0,7.8,112.0,65.0,177.0,6.0,1.0,133.0,129.0,133.0,27.0,0.0,]
     try {
       const response = await axios.post('http://localhost:5000/api/add-week-data', {
-        weekData: inputdata,
+        weekData: inputData,
       });
       console.log(response.data);
 
       await addDoc(collection(firestore, "patientdetails"), {
         name: name,
-        weekdata: inputdata,
+        weekdata: inputData,
         prediction: response.data.prediction,
       });
 
@@ -167,18 +169,19 @@ const PatientDetails = () => {
   <span className="close-btn" onClick={closeAddWeekDialog}>&times;</span>
   <h2>Add Week Data</h2>
   <form id="week-form" onSubmit={addWeekData}>
-    <div className="input">
-      {[...Array(21)].map((_, index) => (
-        <input
-          key={index}
-          type="number"
-          onChange={(e) => handleChange(index, e.target.value)}
-          placeholder={`Week ${index + 1}`}
-        />
-      ))}
-    </div>
-    <button type="submit">Submit</button>
-  </form>
+            <div className="input">
+              {[...Array(21)].map((_, index) => (
+                <input
+                  key={index}
+                  type="number"
+                  step="0.001"
+                  onChange={(e) => handleChange(index, e.target.value)}
+                  placeholder={`data ${index + 1}`}
+                />
+              ))}
+            </div>
+            <button type="submit">Submit</button>
+          </form>
 </div>
 
       </div>

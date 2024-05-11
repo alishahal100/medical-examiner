@@ -31,6 +31,7 @@ const ReportPage = () => {
     useEffect(() => {
       const fetchPatientDetails = async () => {
         try {
+          console.log('Fetching patient details...');
           const userCollection = collection(firestore, 'patientdetails');
           const q = query(userCollection, where('name', '==', name));
           const querySnapshot = await getDocs(q);
@@ -39,18 +40,21 @@ const ReportPage = () => {
             const data = doc.data();
             patientData.push(data);
           });
+          console.log('Fetched patient data:', patientData);
           setPatientDetails(patientData);
           const weekDataArray = patientData.map((data) => data.weekdata);
           const predictionvalue = patientData.map((data) => data.prediction);
-          console.log("prediction value",predictionvalue)
+          console.log('Prediction value:', predictionvalue);
           setWeekData(weekDataArray);
-          setPredictions(predictionvalue)
+          setPredictions(predictionvalue);
         } catch (error) {
           console.error('Error fetching patient details:', error);
         }
       };
+    
       fetchPatientDetails();
     }, [name]);
+    
     // Original chart data
     const chartData = {
         acceleration: {
@@ -80,18 +84,7 @@ const ReportPage = () => {
         }
       };
 
-    useEffect(() => {
-        // Simulating fetching weekData
-        // Replace this with your actual data-fetching logic
-        const mockWeekData = [
-            [80, 85, 90, 95, 100], // acceleration
-            [70, 75, 80, 85, 90], // uterineContractions
-            [75, 80, 85, 90, 95], // abnormalShortTermVariability
-            [65, 70, 75, 80, 85], // abnormalLongTermVariability
-            [85, 90, 95, 100, 105] // baselineHeartRate
-        ];
-        setWeekData(mockWeekData);
-    }, []);
+    
 
     useEffect(() => {
         // Render charts when weekData is available
@@ -108,7 +101,7 @@ const ReportPage = () => {
                 labels: Array.from({ length: weekData.length }, (_, i) => i + 1),
                 datasets: [{
                     label: chartData[chartType].label,
-                    data: weekData.map((week) => week[chartData[chartType].index]),
+                    data: chartData[chartType].data,
                     backgroundColor: chartData[chartType].backgroundColor,
                 }]
             },
@@ -121,7 +114,13 @@ const ReportPage = () => {
     };
 
     return (
-        <div className="chart-container">
+        <div className="flex flex-col gap-20 px-20 mt-20">
+        <div className='flex flex-col text-center'>
+            <h1 className='text-3xl font-bold'>Patient Report</h1>
+            <h2 className='text-xl font-semibold'>Patient Name: {name}</h2>
+            <h2 className='text-xl font-semibold'>Age: {age}</h2>
+           
+        </div>
             {Object.keys(chartData).map(chartType => (
                 <div className="chart-item" key={chartType}>
                     <canvas id={`${chartType}Chart`}></canvas>
